@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Portfólio de Criptomoeda</title>
+<link
+	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
+	rel="stylesheet">
+	
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-family: 'Montserrat', sans-serif;
+	height: 100%;
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #333333;
+	color: #ffca3a;
+}
+
+h1 {
+	width: 100%;
+	max-width: 500px;
+	margin: 32px auto;
+	padding: 32px 64px;
+	text-align: center;
+}
+
+.topo a {
+	text-decoration: none;
+	color: #ffca3a;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.topo a:hover {
+	color: #ede7b1
+}
+
+input {
+	background: #fff;
+	width: 100%;
+	max-width: 400px;
+	margin: 10px auto;
+	padding: 12px 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	list-style: none;
+	color: #000
+}
+
+label {
+	display: flex;
+	justify-content: center;
+	align-items: start
+}
+
+.button input {
+	font-family: 'Montserrat', sans-serif;
+	background: rgba(255, 255, 255, 0.04);
+	width: 100%;
+	max-width: 200px;
+	margin: 20px auto;
+	padding: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	list-style: none;
+	color: #f6f4d2
+}
+
+a {
+	text-decoration: none
+}
+</style>
+
+</head>
+<body>
+	<div class="topo">
+		<h1>
+			<a th:href="@{/}">PORTFÓLIO DE CRIPTOMOEDA</a>
+		</h1>
+	</div>
+		<form action="#" th:action="@{/cliente}" method=post th:object="${cliente}">
+		<label> Nome </label> <input type="text" th:field="*{nome}">
+		<label> CPF </label> <input type="text" th:field="*{cpf}">
+		<div class="button"><input type="submit" value="Cadastrar"></div>
+	</form>
+	
+	
+</body>
+</html>

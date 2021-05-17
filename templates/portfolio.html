@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link
+	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
+	rel="stylesheet">
+<title>Portfólio de Criptomoeda</title>
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-family: 'Montserrat', sans-serif;
+	height: 100%;
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #333333;
+	color: #ffca3a;
+}
+
+h1 {
+	width: 100%;
+	max-width: 500px;
+	margin: 32px auto;
+	padding: 32px 64px;
+	text-align: center;
+}
+
+.topo a {
+	text-decoration: none;
+	color: #ffca3a;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.topo a:hover {
+	color: #ede7b1
+}
+
+
+p {
+	display: flex;
+	justify-content: center;
+	align-items: start
+}
+
+</style>
+
+</head>
+<body>
+	<div class="topo">
+		<h1>
+			<a th:href="@{/}">PORTFÓLIO DE CRIPTOMOEDA</a>
+		</h1>
+	</div>
+	<p>Aqui terá uma tabela de Criptomoedas</p>
+</body>
+</html>
