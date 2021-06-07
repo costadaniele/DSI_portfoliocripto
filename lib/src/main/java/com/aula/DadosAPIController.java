@@ -43,8 +43,8 @@ public class DadosAPIController {
 		userList = new ArrayList<>();
 		
 		try {
-//			URL urlT = new URL("http://coins-api-fatec.herokuapp.com/all");
-			URL urlT = new URL("http://127.0.0.1:5000/all");
+			URL urlT = new URL("http://coins-api-fatec.herokuapp.com/all");
+//			URL urlT = new URL("http://127.0.0.1:5000/all");
 			connection = (HttpURLConnection) urlT.openConnection();
 			
 			//Request setup
