@@ -23,7 +23,7 @@
 					<img th:src="'https://www.cryptocompare.com' + ${tempData.url}" width='50'>
 				</td>
 				<td th:text="${tempData.name}"></td>
-				<td><a th:href="@{/coin/} + ${tempData.symbol}"><button>Ver</button></a></td>
+				<td><a th:href="@{/moeda/} + ${tempData.symbol}" target="_blank"><button>Ver</button></a></td>
 			</tr>
 		</tbody>
 	</table>

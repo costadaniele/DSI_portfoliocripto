@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -115,6 +116,7 @@ public class DadosAPIController {
 					responseContent.append(line);
 				}
 				reader.close();
+				return "erro";
 			} else {
 				reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				while((line = reader.readLine()) != null) {
@@ -129,7 +131,11 @@ public class DadosAPIController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
+		} catch (JSONException e) {
+			return "confirm";
+		}
+		
+		finally {
 			connection.disconnect();
 		}
 		
