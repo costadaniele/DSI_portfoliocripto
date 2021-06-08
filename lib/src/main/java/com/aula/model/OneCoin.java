@@ -10,10 +10,11 @@ public class OneCoin {
 	private String changeday;
 	private String changepctday;
 	private String price;
+	private String url;
 	
 	public OneCoin(String name, String fullname, String openday, String highday, String lowday, String volumedayto,
-			String changeday, String changepctday, String price) {
-
+			String changeday, String changepctday, String price, String url) {
+		super();
 		this.name = name;
 		this.fullname = fullname;
 		this.openday = openday;
@@ -23,6 +24,7 @@ public class OneCoin {
 		this.changeday = changeday;
 		this.changepctday = changepctday;
 		this.price = price;
+		this.url = url;
 	}
 
 	public String getName() {
@@ -96,8 +98,16 @@ public class OneCoin {
 	public void setPrice(String price) {
 		this.price = price;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	
 	
 	
-	
+		
 }

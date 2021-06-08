@@ -26,10 +26,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aula.model.Coin;
 import com.aula.model.DataTest;
+import com.aula.model.OneCoin;
 
 @Controller
 public class DadosAPIController {
 	private static List<Coin> listTest;
+	private static List<OneCoin> listCoin;
 	private List<DataTest> userList;
 
 	@Autowired
@@ -89,7 +91,7 @@ public class DadosAPIController {
 	}
 	
 	@RequestMapping(value="moeda/{symbol}", method = RequestMethod.GET)
-	public String umaMoeda(@PathVariable("symbol") String symbol) {
+	public String umaMoeda(@PathVariable("symbol") String symbol, Model model) {
 		
 		BufferedReader reader;
 		String line;
@@ -130,9 +132,10 @@ public class DadosAPIController {
 		} finally {
 			connection.disconnect();
 		}
-		System.out.println(responseContent);
-		JSONObject moeda = new JSONObject(responseContent);
-		System.out.println(moeda);
+		
+		model.addAttribute("data", parseJsonOneCoin(responseContent.toString()));
+		
+//		System.out.println(model);
 		
 		return "moeda";
 	}
@@ -155,6 +158,32 @@ public class DadosAPIController {
 		}
 		
 		return listTest;
+	}
+	
+	private static List<OneCoin> parseJsonOneCoin(String responseBody) {
+		JSONArray albums = new JSONArray(responseBody);
+		listCoin = new ArrayList<>();
+		
+		
+		for (int i = 0; i < albums.length(); i++) {
+			JSONObject album = albums.getJSONObject(i);
+			
+			String name = album.getString("name");
+			String fullname = album.getString("fullname");
+			String openday = album.getString("openday");
+			String highday = album.getString("highday");
+			String lowday = album.getString("lowday");
+			String volumedayto = album.getString("volumedayto");
+			String changeday = album.getString("changeday");
+			String changepctday = album.getString("changepctday");
+			String price = album.getString("price");
+			String url = album.getString("url");
+			
+			OneCoin dataTest = new OneCoin(name, fullname, openday, highday, lowday, volumedayto, changeday, changepctday, price, url);
+			listCoin.add(dataTest);
+		}
+		
+		return listCoin;
 	}
 	
 	
