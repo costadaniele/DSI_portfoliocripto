@@ -20,6 +20,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aula.model.Coin;
 import com.aula.model.DataTest;
@@ -44,7 +47,6 @@ public class DadosAPIController {
 		
 		try {
 			URL urlT = new URL("http://coins-api-fatec.herokuapp.com/all");
-//			URL urlT = new URL("http://127.0.0.1:5000/all");
 			connection = (HttpURLConnection) urlT.openConnection();
 			
 			//Request setup
@@ -81,29 +83,61 @@ public class DadosAPIController {
 		}
 		
 		
-		model.addAttribute("data", parseJson(responseContent.toString()));
+		model.addAttribute("data", parseJsonAllCoins(responseContent.toString()));
 			
 		return "principal";
 	}
 	
-	@GetMapping("/test2")
-	public String test2(Model model) {
-		//Method 2: java.net.http.HttpClient
-		HttpClient client = HttpClient.newHttpClient();
-//		HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://jsonplaceholder.typicode.com/albums")).build();
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://127.0.0.1:5000/all")).build();
-
-		//		.thenAccept(System.out::println)
+	@RequestMapping(value="moeda/{symbol}", method = RequestMethod.GET)
+	public String umaMoeda(@PathVariable("symbol") String symbol) {
 		
-		client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-		.thenApply(HttpResponse::body)
-		.thenApply(DadosAPIController::parseJson)
-		.join();
+		BufferedReader reader;
+		String line;
+		StringBuffer responseContent = new StringBuffer();
 		
-		return "principal";
+		try {
+			
+			URL urlT = new URL("http://coins-api-fatec.herokuapp.com/data/" + symbol);
+			connection = (HttpURLConnection) urlT.openConnection();
+			
+			//Request setup
+			connection.setRequestMethod("GET");
+			connection.setConnectTimeout(5000);
+			connection.setReadTimeout(5000);
+			
+			int status = connection.getResponseCode();
+			
+			if (status > 299) {
+				reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+				while((line = reader.readLine()) != null) {
+					responseContent.append(line);
+				}
+				reader.close();
+			} else {
+				reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				while((line = reader.readLine()) != null) {
+					responseContent.append(line);
+				}
+				reader.close();
+			}
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			connection.disconnect();
+		}
+		System.out.println(responseContent);
+		JSONObject moeda = new JSONObject(responseContent);
+		System.out.println(moeda);
+		
+		return "moeda";
 	}
 	
-	private static List<Coin> parseJson(String responseBody) {
+	private static List<Coin> parseJsonAllCoins(String responseBody) {
 		JSONArray albums = new JSONArray(responseBody);
 		listTest = new ArrayList<>();
 		
@@ -118,10 +152,10 @@ public class DadosAPIController {
 			
 			Coin dataTest = new Coin(id, url, symbol, name);
 			listTest.add(dataTest);
-			
-//			System.out.println(id + " " + title + " " + userId);
 		}
 		
 		return listTest;
 	}
+	
+	
 }
