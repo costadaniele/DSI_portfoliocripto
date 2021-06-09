@@ -5,19 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,18 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aula.model.Coin;
-import com.aula.model.DataTest;
 import com.aula.model.OneCoin;
 
 @Controller
 public class DadosAPIController {
 	private static List<Coin> listTest;
 	private static List<OneCoin> listCoin;
-	private List<DataTest> userList;
-
-	@Autowired
-	private ApplicationContext context;
-	
 	private static HttpURLConnection connection;
 	
 	@GetMapping("/")
@@ -46,7 +34,7 @@ public class DadosAPIController {
 		String line;
 		StringBuffer responseContent = new StringBuffer();
 		
-		userList = new ArrayList<>();
+		new ArrayList<>();
 		
 		try {
 			URL urlT = new URL("http://coins-api-fatec.herokuapp.com/all");
@@ -54,8 +42,8 @@ public class DadosAPIController {
 			
 			//Request setup
 			connection.setRequestMethod("GET");
-			connection.setConnectTimeout(5000);
-			connection.setReadTimeout(5000);
+			connection.setConnectTimeout(15000);
+			connection.setReadTimeout(15000);
 			
 			int status = connection.getResponseCode();
 			System.out.println(status);
@@ -184,8 +172,9 @@ public class DadosAPIController {
 			String changepctday = album.getString("changepctday");
 			String price = album.getString("price");
 			String url = album.getString("url");
+			String symbol = album.getString("symbol");
 			
-			OneCoin dataTest = new OneCoin(name, fullname, openday, highday, lowday, volumedayto, changeday, changepctday, price, url);
+			OneCoin dataTest = new OneCoin(name, fullname, openday, highday, lowday, volumedayto, changeday, changepctday, price, url, symbol);
 			listCoin.add(dataTest);
 		}
 		

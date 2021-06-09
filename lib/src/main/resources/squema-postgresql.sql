@@ -1,5 +1,4 @@
-create table if not exists produto(
+create table if not exists minhas_moedas(
 	id serial primary key,
-	nome varchar(50),
-	preco real
+	symbol varchar(20)
 );
